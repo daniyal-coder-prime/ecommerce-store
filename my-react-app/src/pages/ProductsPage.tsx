@@ -42,28 +42,24 @@ const ProductsPage: React.FC = () => {
     };
 
  return (
-        <div style={{ padding: '24px' }}>
-            <h1 style={{ fontFamily: 'Arial', marginBottom: '24px' }}>
-                🛍️ Our Products
-            </h1>
+         <div>
+      <h1>Our Products</h1>
 
-            {/* .map() loops through products and creates one ProductCard per product */}
-            <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
-                {products.map((product) => (
-                    // key is REQUIRED when using .map() — always use the id
-                    <ProductCard
-                        key={product.id}
-                        id={product.id} 
-                        name={product.name}
-                        price={product.price}
-                        imageUrl={product.imageUrl}
-                        stock={product.stock}
-                        onAddToCart={handleAddToCart}
-                    />
-                ))}
-            </div>
-        </div>
-    );
+      {/* .map() loops through the array and creates a ProductCard for each */}
+      {products.map((product) => (
+        // 'key' is required by React when rendering lists
+        <ProductCard
+          key={product.id}
+          id={product.id}
+          name={product.name}
+          price={product.price}
+          imageUrl={product.imageUrl}
+          stock={product.stock}
+          onAddToCart={handleAddToCart}
+        />
+      ))}
+    </div>
+  );
 };
 
 export default ProductsPage;

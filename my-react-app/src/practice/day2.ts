@@ -93,7 +93,7 @@ interface ApiResponse<T> {
   total?: number;
 }
 
-type ProductResponse = ApiResponse <Product[]>
+type ProductResponse = ApiResponse <Product[]> 
 
 type SingleProductResponse = ApiResponse <Product>;
 
