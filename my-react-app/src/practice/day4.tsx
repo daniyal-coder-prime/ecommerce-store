@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo , useCallback  } from "react";
 
 // ─── EXAMPLE 1: Simple counter ───────────────────────────────
 const Counter: React.FC = () => {
@@ -8,7 +8,9 @@ const Counter: React.FC = () => {
     { id: 3, name: "Samsung TV", price: 95000, stock: 12 },
   ]);
    const [searchTerm, setSearchTerm] = useState('');
-  const [loading, setLoading] = useState<boolean>(true);
+  const [cartIds, setCartIds] = useState<number[]>([]);
+
+/*   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [category, setCategory] = useState<string>("All");
   const [count, setCount] = useState(0);
@@ -18,7 +20,7 @@ const Counter: React.FC = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   const [age, setAge] = useState(0);
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(1); */
 
   // run once , when I enter room , bring me products
 
@@ -51,14 +53,14 @@ const Counter: React.FC = () => {
   }, []);
  */
   // run when category changes
-
+/* 
   useEffect(() => {
     console.log("category changes to", category);
-  }, [category]);
+  }, [category]); */
 
   // clean up
 
-  useEffect(() => {
+/*   useEffect(() => {
     const interval = setInterval(() => {
       console.log("Still on this page...");
     }, 3000);
@@ -69,7 +71,25 @@ const Counter: React.FC = () => {
       clearInterval(interval);
       console.log("Component removed — interval cleaned up");
     };
-  }, []);
+  }, []); */
+  const filteredProducts = useMemo (() => {
+    console.log("filtering products ");
+    return products.filter(p =>
+      p.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [products, searchTerm]);
+
+
+
+  const handleAddToCart = useCallback((productId: number): void => {
+
+    setCartIds (prev => {
+        if (prev.includes(productId)) return prev;
+         return [...prev, productId];
+    })
+  }, [])
+
+
   interface Product {
     id: number;
     name: string;
@@ -77,7 +97,8 @@ const Counter: React.FC = () => {
     stock: number;
   }
 
-  if (loading) return <div>Loading products...</div>;
+
+/*   if (loading) return <div>Loading products...</div>;
   if (error) return <div style={{ color: "red" }}>{error}</div>;
 
   const MAX_QUANTITY = 99;
@@ -90,20 +111,12 @@ const Counter: React.FC = () => {
     // Never go below 1
     setQuantity((prev) => Math.max(prev - 1, 1));
   };
-
+ */
   return (
-    <div>
-      <select value={category} onChange={(e) => setCategory(e.target.value)}>
-        <option>All</option>
-        <option>Electronics</option>
-        <option>Clothing</option>
-      </select>
-
-      {products.map((p) => (
-        <div key={p.id}>
-          <strong>{p.name}</strong> — PKR {p.price.toLocaleString()}
-        </div>
-      ))}
+      <div>
+      <p>Cart items: {cartIds.join(', ')}</p>
+      <button onClick={() => handleAddToCart(1)}>Add Laptop</button>
+      <button onClick={() => handleAddToCart(2)}>Add iPhone</button>
     </div>
   );
 };
