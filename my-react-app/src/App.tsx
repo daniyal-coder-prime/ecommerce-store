@@ -1,4 +1,5 @@
-import ProductsPage from './pages/ProductsPage'
+// import ProductsPage from './pages/ProductsPage'
+import Counter from './practice/day4'
 
 function App() {
 
@@ -6,7 +7,7 @@ function App() {
   return (
     <>
      <div>
-            <ProductsPage />
+            <Counter/>
         </div>
     </>
   )
